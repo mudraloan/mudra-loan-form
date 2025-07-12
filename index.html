@@ -11,6 +11,15 @@
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
+.fade-error {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
     body {
       background: #f5f7fa;
       margin: 0;
@@ -35,6 +44,23 @@
       color: #333;
       margin-bottom: 20px;
     }
+.floating-home-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #1e88e5;
+  color: white;
+  font-size: 24px;
+  padding: 12px 16px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 999;
+  transition: background 0.3s ease;
+}
+.floating-home-btn:hover {
+  background: #1565c0;
+}
     label {
       font-weight: 600;
       margin-top: 15px;
@@ -430,6 +456,14 @@
       document.getElementById("aadharError").innerText = aadharError;
       document.getElementById("panError").innerText = panError;
 
+document.getElementById("aadharError").classList.remove("fade-error");
+document.getElementById("panError").classList.remove("fade-error");
+
+setTimeout(() => {
+  if (aadharError) document.getElementById("aadharError").classList.add("fade-error");
+  if (panError) document.getElementById("panError").classList.add("fade-error");
+}, 10);
+
       if (!aadharError && !panError) {
         document.getElementById('step1').classList.remove('active');
         document.getElementById('step2').classList.add('active');
@@ -566,6 +600,11 @@ if (n + 1 === 6) {
     document.getElementById("statusResult").classList.remove('active');
     document.getElementById("statusCheck").classList.add('active');
   }
+function goHome() {
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  document.getElementById("step1").classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
   </script>
 <!-- Footer Info -->
 <div style="text-align:center; font-size: 13px; color: #777; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
@@ -576,5 +615,8 @@ if (n + 1 === 6) {
   <p><strong>Helpline No:</strong> 18003456195<br>
      <strong>Email:</strong> help@mudra.org.in</p>
 </div>
+<a href="javascript:goHome()" class="floating-home-btn" title="Go Home">
+  🏠
+</a>
 </body>
 </html>
