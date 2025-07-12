@@ -273,15 +273,15 @@
     <!-- Step 1 -->
     <div class="step active" id="step1">
       <h3>Step 1: Personal Details</h3>
-      <label>Aadhar Card Number:</label>
+      <label>Aadhaar Card Number:</label>
       <input 
   type="text" 
-  id="aadhar" 
+  id="Aadhaar" 
   maxlength="12" 
   oninput="this.value = this.value.replace(/[^0-9]/g, ''); limitLength(this, 12)" 
-  placeholder="Enter 12-digit Aadhar" />
+  placeholder="Enter 12-digit Aadhaar" />
 
-      <div id="aadharError" class="error"></div>
+      <div id="AadhaarError" class="error"></div>
 
       <label>PAN Card Number:</label>
       <input 
@@ -441,13 +441,13 @@
 <!-- Step 8: Status Check Form -->
 <div class="step" id="statusCheck">
   <h3>🔍 Check Your Loan Application</h3>
-  <label>Enter Aadhar Number:</label>
+  <label>Enter Aadhaar Number:</label>
   <input 
   type="text" 
-  id="statusAadhar" 
+  id="statusAadhaar" 
   maxlength="12" 
   oninput="this.value=this.value.replace(/\D/g,''); limitLength(this, 12);" 
-  placeholder="Enter 12-digit Aadhar"
+  placeholder="Enter 12-digit Aadhaar"
 />
 
   <div id="statusError" class="error"></div>
@@ -508,30 +508,30 @@
     let eligibleAmt = 0, selectedLoan = 10000;
 
     function nextStep1() {
-      const aadhar = document.getElementById("aadhar").value.trim();
+      const Aadhaar = document.getElementById("Aadhaar").value.trim();
       const pan = document.getElementById("pan").value.trim().toUpperCase();
-      let aadharError = "", panError = "";
+      let AadhaarError = "", panError = "";
 
-      if (!/^\d{12}$/.test(aadhar)) {
-        aadharError = "Aadhar must be 12 digits.";
+      if (!/^\d{12}$/.test(Aadhaar)) {
+        AadhaarError = "Aadhaar must be 12 digits.";
       }
 
       if (!/^[A-Z0-9]{10}$/.test(pan)) {
         panError = "PAN must be 10 alphanumeric characters.";
       }
 
-      document.getElementById("aadharError").innerText = aadharError;
+      document.getElementById("AadhaarError").innerText = AadhaarError;
       document.getElementById("panError").innerText = panError;
 
-document.getElementById("aadharError").classList.remove("fade-error");
+document.getElementById("AadhaarError").classList.remove("fade-error");
 document.getElementById("panError").classList.remove("fade-error");
 
 setTimeout(() => {
-  if (aadharError) document.getElementById("aadharError").classList.add("fade-error");
+  if (AadhaarError) document.getElementById("AadhaarError").classList.add("fade-error");
   if (panError) document.getElementById("panError").classList.add("fade-error");
 }, 10);
 
-      if (!aadharError && !panError) {
+      if (!AadhaarError && !panError) {
         document.getElementById('step1').classList.remove('active');
         document.getElementById('step2').classList.add('active');
         startCIBIL();
@@ -648,9 +648,9 @@ if (n + 1 === 6) {
   }
 
   function checkStatus() {
-    const aadhar = document.getElementById("statusAadhar").value.trim();
-    if (!/^\d{12}$/.test(aadhar)) {
-      document.getElementById("statusError").innerText = "Aadhar must be 12 digits.";
+    const Aadhaar = document.getElementById("statusAadhaar").value.trim();
+    if (!/^\d{12}$/.test(Aadhaar)) {
+      document.getElementById("statusError").innerText = "Aadhaar must be 12 digits.";
     } else {
       document.getElementById("statusError").innerText = "";
       document.getElementById("statusCheck").classList.remove('active');
