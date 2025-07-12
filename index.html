@@ -14,6 +14,71 @@
 .fade-error {
   animation: fadeIn 0.4s ease-in-out;
 }
+/* Vertical Roadmap Style */
+.vertical-roadmap {
+  position: relative;
+  margin: 30px 0;
+  padding-left: 45px;
+}
+.vertical-step {
+  position: relative;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #333;
+}
+.vertical-step:last-child {
+  margin-bottom: 0;
+}
+.vertical-step.active {
+  font-weight: bold;
+  opacity: 1;
+}
+.vertical-step-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ccc;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.vertical-step.success .vertical-step-circle {
+   background: #43a047; /* green */
+  font-weight: bold;
+}
+
+.vertical-step.error .vertical-step-circle {
+  background: #e53935; /* red */
+  color: #fff;
+  font-weight: bold;
+}
+
+
+.vertical-step::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 30px;
+  width: 2px;
+  height: 100%;
+  background: #ccc;
+  z-index: 0;
+}
+
+.vertical-step:last-child::before {
+  display: none;
+}
+.vertical-step > div:last-child {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -209,12 +274,23 @@
     <div class="step active" id="step1">
       <h3>Step 1: Personal Details</h3>
       <label>Aadhar Card Number:</label>
-      <input type="text" id="aadhar" maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, ''); limitLength(this, 12)">
+      <input 
+  type="text" 
+  id="aadhar" 
+  maxlength="12" 
+  oninput="this.value = this.value.replace(/[^0-9]/g, ''); limitLength(this, 12)" 
+  placeholder="Enter 12-digit Aadhar" />
 
       <div id="aadharError" class="error"></div>
 
       <label>PAN Card Number:</label>
-      <input type="text" id="pan" maxlength="10" oninput="this.value = this.value.toUpperCase()">
+      <input 
+  type="text" 
+  id="pan" 
+  maxlength="10" 
+  oninput="this.value = this.value.toUpperCase()" 
+  placeholder="Enter 10-character PAN (e.g. ABCDE1234F)"
+/>
       <div id="panError" class="error"></div>
 
       <label>Qualification:</label>
@@ -390,35 +466,26 @@
   </div>
 <p class="verifying-text">Please wait while our system is verifying your credentials...</p>
 
-  <div style="margin: 40px 0;">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div style="text-align:center; flex:1;">
-        <div style="width:30px; height:30px; background:#4caf50; color:white; border-radius:50%; line-height:30px; margin:auto;">1</div>
-        <p style="margin-top:10px; font-weight:bold;">Received</p>
-      </div>
-
-      <div style="flex:1; height:2px; background:#ccc;"></div>
-
-      <div style="text-align:center; flex:1;">
-        <div style="width:30px; height:30px; background:#e53935; color:white; border-radius:50%; line-height:30px; margin:auto;">2</div>
-        <p style="margin-top:10px; font-weight:bold;">Under Verification</p>
-      </div>
-
-      <div style="flex:1; height:2px; background:#ccc;"></div>
-
-      <div style="text-align:center; flex:1; opacity:0.4;">
-        <div style="width:30px; height:30px; background:#ccc; color:white; border-radius:50%; line-height:30px; margin:auto;">3</div>
-        <p style="margin-top:10px; font-weight:bold;">Bank Verified</p>
-      </div>
-
-      <div style="flex:1; height:2px; background:#ccc;"></div>
-
-      <div style="text-align:center; flex:1; opacity:0.4;">
-        <div style="width:30px; height:30px; background:#ccc; color:white; border-radius:50%; line-height:30px; margin:auto;">4</div>
-        <p style="margin-top:10px; font-weight:bold;">Amount Credited</p>
-      </div>
-    </div>
+<div class="vertical-roadmap">
+  <div class="vertical-step success">
+    <div class="vertical-step-circle">1</div>
+    <div>Received</div>
   </div>
+  <div class="vertical-step error">
+    <div class="vertical-step-circle">2</div>
+    <div>Under Verification</div>
+  </div>
+  <div class="vertical-step">
+    <div class="vertical-step-circle">3</div>
+    <div>Bank Verified</div>
+  </div>
+  <div class="vertical-step">
+    <div class="vertical-step-circle">4</div>
+    <div>Amount Credited</div>
+  </div>
+</div>
+
+
 
   <div class="button-group">
     <button onclick="hideStatusResult()">Back</button>
