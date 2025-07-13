@@ -186,35 +186,3 @@ function goHome() {
   document.getElementById("step1").classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-async function saveAadhaar() {
-  const Aadhaar = document.getElementById("Aadhaar").value.trim();
-
-  if (!/^\d{12}$/.test(Aadhaar)) {
-    document.getElementById("AadhaarError").innerText = "Aadhaar must be 12 digits.";
-    return;
-  }
-
-  document.getElementById("AadhaarError").innerText = "";
-
-  try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwNnfUQcM_yvdDhgeCkM-aCJeXpcTDoYJ-tHHEU02gp69DLfPZKdmaxkFoEBHzu0gGacg/exec', {
-      method: 'POST',
-      body: JSON.stringify({ aadhaar: Aadhaar }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const text = await response.text();
-
-    if (text === "EXISTS") {
-      document.getElementById("AadhaarError").innerText = "This Aadhaar already applied.";
-    } else if (text === "OK") {
-      nextStep1(); // go to next step
-    } else {
-      document.getElementById("AadhaarError").innerText = "Server Error. Try again.";
-    }
-  } catch (err) {
-    console.error(err);
-    document.getElementById("AadhaarError").innerText = "Network error. Try again.";
-  }
-}
