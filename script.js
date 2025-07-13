@@ -189,47 +189,16 @@ function goHome() {
 
 async function saveAadhaar() {
   const Aadhaar = document.getElementById("Aadhaar").value.trim();
-  const pan = document.getElementById("pan").value.trim().toUpperCase();
-  const purpose = document.getElementById("loanPurpose").value;
-  const otherText = document.getElementById("otherPurposeInput").value.trim();
 
-  let AadhaarError = "", panError = "";
-  const errorEl = document.getElementById("otherPurposeError");
-
-  // Validate Aadhaar
   if (!/^\d{12}$/.test(Aadhaar)) {
-    AadhaarError = "Aadhaar must be 12 digits.";
-  }
-
-  // Validate PAN
-  if (!/^[A-Z0-9]{10}$/.test(pan)) {
-    panError = "PAN must be 10 alphanumeric characters.";
-  }
-
-  // Display Errors
-  document.getElementById("AadhaarError").innerText = AadhaarError;
-  document.getElementById("panError").innerText = panError;
-  errorEl.innerText = "";
-
-  document.getElementById("AadhaarError").classList.remove("fade-error");
-  document.getElementById("panError").classList.remove("fade-error");
-
-  setTimeout(() => {
-    if (AadhaarError) document.getElementById("AadhaarError").classList.add("fade-error");
-    if (panError) document.getElementById("panError").classList.add("fade-error");
-  }, 10);
-
-  if (AadhaarError || panError) return;
-
-  // If "Other Purpose" selected but no text
-  if (purpose === "Other Purpose" && !otherText) {
-    errorEl.innerText = "Please specify your loan purpose.";
+    document.getElementById("AadhaarError").innerText = "Aadhaar must be 12 digits.";
     return;
   }
 
-  // ✅ Submit Aadhaar to Google Sheets
+  document.getElementById("AadhaarError").innerText = "";
+
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbw5HiV7Ov8IfZHUoDuy4NFtNc_Ui4Xrl5sHXPLuMMI5namPIwNgJADsRObAxq90QI58OQ/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwNnfUQcM_yvdDhgeCkM-aCJeXpcTDoYJ-tHHEU02gp69DLfPZKdmaxkFoEBHzu0gGacg/exec', {
       method: 'POST',
       body: JSON.stringify({ aadhaar: Aadhaar }),
       headers: { 'Content-Type': 'application/json' },
@@ -240,9 +209,7 @@ async function saveAadhaar() {
     if (text === "EXISTS") {
       document.getElementById("AadhaarError").innerText = "This Aadhaar already applied.";
     } else if (text === "OK") {
-      document.getElementById('step1').classList.remove('active');
-      document.getElementById('step2').classList.add('active');
-      startCIBIL();
+      nextStep1(); // go to next step
     } else {
       document.getElementById("AadhaarError").innerText = "Server Error. Try again.";
     }
