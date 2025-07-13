@@ -25,10 +25,21 @@ setTimeout(() => {
 }, 10);
 
       if (!AadhaarError && !panError) {
-        document.getElementById('step1').classList.remove('active');
-        document.getElementById('step2').classList.add('active');
-        startCIBIL();
-      }
+  const purpose = document.getElementById("loanPurpose").value;
+  const otherText = document.getElementById("otherPurposeInput").value.trim();
+  const errorEl = document.getElementById("otherPurposeError");
+
+  errorEl.innerText = "";
+
+  if (purpose === "Other Purpose" && !otherText) {
+    errorEl.innerText = "Please specify your loan purpose.";
+    return;
+  }
+
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  startCIBIL();
+}
     }
 
     function nextStep(n) {
@@ -82,6 +93,16 @@ if (n + 1 === 6) {
 
 }
 
+document.getElementById("loanPurpose").addEventListener("change", function () {
+  const selectedValue = this.value;
+  const otherBox = document.getElementById("otherPurposeContainer");
+  if (selectedValue === "Other Purpose") {
+    otherBox.style.display = "block";
+  } else {
+    otherBox.style.display = "none";
+    document.getElementById("otherPurposeError").textContent = "";
+  }
+});
 
     function prevStep(n) {
       document.getElementById('step' + n).classList.remove('active');
