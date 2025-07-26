@@ -6,10 +6,10 @@
 <body>
   <h2>Submit Details</h2>
   <form id="dataForm">
-    <label for="name">Name:</label>
+    <label>Name:</label>
     <input type="text" name="name" required><br><br>
 
-    <label for="roll">Roll No.:</label>
+    <label>Roll No.:</label>
     <input type="text" name="roll" required><br><br>
 
     <button type="submit">Submit</button>
@@ -24,7 +24,7 @@
       const form = e.target;
       const formData = new FormData(form);
 
-      fetch("https://script.google.com/macros/s/AKfycby9IhuQtixRrL5DtFntDNXNOQAjo77hgRt-VzNJGfM/dev", {
+      fetch("https://script.google.com/macros/s/AKfycbzVCqMGdStr-Risuxw9ARKpJuOh1GHc3YLmIFGk1XXF8WXEEPcL-BdjsIRzOYBcJZ0q/exec", {
         method: "POST",
         body: formData
       })
@@ -35,6 +35,7 @@
       })
       .catch(err => {
         document.getElementById("response").innerText = "Submission Failed!";
+        console.error(err);
       });
     });
   </script>
