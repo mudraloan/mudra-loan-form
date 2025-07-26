@@ -1,51 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Google Sheet Data</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #999;
-            text-align: center;
-        }
-        th {
-            background-color: #eee;
-        }
-    </style>
+  <title>Form Submission</title>
 </head>
 <body>
+  <h2>Submit Your Info</h2>
+  <form id="dataForm">
+    <label>Name:</label>
+    <input type="text" name="name" required><br><br>
+    <label>Roll No.:</label>
+    <input type="text" name="roll" required><br><br>
+    <button type="submit">Submit</button>
+  </form>
 
-    <h2 style="text-align:center;">Google Sheet Data</h2>
-    <table id="sheet-data"></table>
+  <p id="response"></p>
 
-    <script>
-        fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQqH-AXaIEToelzfns0_rJhpHQg55sOP6Wz2MNQElQ3ewrypPDfs2zJtIFTOw-BKes72piwRHonCHKL/pub?output=csv")
-            .then(res => res.text())
-            .then(csv => {
-                const rows = csv.trim().split("\n").map(row => row.split(","));
-                const table = document.getElementById("sheet-data");
+  <script>
+    document.getElementById("dataForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      
+      const form = e.target;
+      const formData = new FormData(form);
 
-                rows.forEach((row, i) => {
-                    const tr = document.createElement("tr");
-                    row.forEach(cell => {
-                        const tag = i === 0 ? "th" : "td";
-                        const td = document.createElement(tag);
-                        td.textContent = cell;
-                        tr.appendChild(td);
-                    });
-                    table.appendChild(tr);
-                });
-            })
-            .catch(err => {
-                console.error("Failed to load sheet data", err);
-                document.getElementById("sheet-data").innerHTML = "<tr><td colspan='99'>Failed to load data</td></tr>";
-            });
-    </script>
-
+      fetch("YOUR_WEB_APP_URL", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("response").innerText = data;
+        form.reset();
+      })
+      .catch(err => {
+        document.getElementById("response").innerText = "Error submitting form.";
+      });
+    });
+  </script>
 </body>
 </html>
