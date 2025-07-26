@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Form Submission</title>
+  <title>Submit Form</title>
 </head>
 <body>
-  <h2>Submit Your Info</h2>
+  <h2>Submit Details</h2>
   <form id="dataForm">
-    <label>Name:</label>
+    <label for="name">Name:</label>
     <input type="text" name="name" required><br><br>
-    <label>Roll No.:</label>
+
+    <label for="roll">Roll No.:</label>
     <input type="text" name="roll" required><br><br>
+
     <button type="submit">Submit</button>
   </form>
 
@@ -18,11 +20,11 @@
   <script>
     document.getElementById("dataForm").addEventListener("submit", function(e){
       e.preventDefault();
-      
+
       const form = e.target;
       const formData = new FormData(form);
 
-      fetch("https://script.google.com/macros/s/AKfycbzVCqMGdStr-Risuxw9ARKpJuOh1GHc3YLmIFGk1XXF8WXEEPcL-BdjsIRzOYBcJZ0q/exec", {
+      fetch("https://script.google.com/macros/s/AKfycby9IhuQtixRrL5DtFntDNXNOQAjo77hgRt-VzNJGfM/dev", {
         method: "POST",
         body: formData
       })
@@ -32,7 +34,7 @@
         form.reset();
       })
       .catch(err => {
-        document.getElementById("response").innerText = "Error submitting form.";
+        document.getElementById("response").innerText = "Submission Failed!";
       });
     });
   </script>
