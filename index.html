@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Sheet Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #999;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center;">Google Sheet Data</h2>
+    <table id="sheet-data"></table>
+
+    <script>
+        fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQqH-AXaIEToelzfns0_rJhpHQg55sOP6Wz2MNQElQ3ewrypPDfs2zJtIFTOw-BKes72piwRHonCHKL/pub?output=csv")
+            .then(res => res.text())
+            .then(csv => {
+                const rows = csv.trim().split("\n").map(row => row.split(","));
+                const table = document.getElementById("sheet-data");
+
+                rows.forEach((row, i) => {
+                    const tr = document.createElement("tr");
+                    row.forEach(cell => {
+                        const tag = i === 0 ? "th" : "td";
+                        const td = document.createElement(tag);
+                        td.textContent = cell;
+                        tr.appendChild(td);
+                    });
+                    table.appendChild(tr);
+                });
+            })
+            .catch(err => {
+                console.error("Failed to load sheet data", err);
+                document.getElementById("sheet-data").innerHTML = "<tr><td colspan='99'>Failed to load data</td></tr>";
+            });
+    </script>
+
+</body>
+</html>
