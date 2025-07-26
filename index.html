@@ -1,28 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Submit Form</title>
+  <title>Employee Manager</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      padding: 10px;
+      width: 90%;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #00c6ff;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #employeeDetails {
+      text-align: left;
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    label {
+      float: left;
+      margin-left: 5%;
+      font-weight: bold;
+    }
+
+    #response {
+      color: lightgreen;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Submit Details</h2>
-  <form id="dataForm">
-    <label>Name:</label>
-    <input type="text" name="name" required><br><br>
 
-    <label>Roll No.:</label>
-    <input type="text" name="roll" required><br><br>
+  <div class="container">
+    <button onclick="showForm('add')">➕ Add Employee</button>
+    <button onclick="showForm('view')">🔍 View Employee</button>
 
-    <button type="submit">Submit</button>
-  </form>
+    <!-- Add Form -->
+    <div id="addForm" class="hidden">
+      <h2>Add Employee</h2>
+      <form id="empForm">
+        <label>Employee ID:</label><br>
+        <input type="text" name="emp_id" required><br>
+        <label>Employee Name:</label><br>
+        <input type="text" name="emp_name" required><br>
+        <label>Gender:</label><br>
+        <select name="gender" required>
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select><br>
+        <label>Salary:</label><br>
+        <input type="number" name="salary" required><br>
+        <button type="submit">Submit</button>
+      </form>
+      <p id="response"></p>
+    </div>
 
-  <p id="response"></p>
+    <!-- View Form -->
+    <div id="viewForm" class="hidden">
+      <h2>Show Employee Details</h2>
+      <input type="text" id="searchId" placeholder="Enter Employee ID">
+      <button onclick="searchEmployee()">Search</button>
+      <div id="employeeDetails" class="hidden"></div>
+    </div>
+  </div>
 
   <script>
-    document.getElementById("dataForm").addEventListener("submit", function(e){
-      e.preventDefault();
+    function showForm(type) {
+      document.getElementById('addForm').classList.add('hidden');
+      document.getElementById('viewForm').classList.add('hidden');
 
-      const form = e.target;
-      const formData = new FormData(form);
+      if (type === 'add') {
+        document.getElementById('addForm').classList.remove('hidden');
+      } else {
+        document.getElementById('viewForm').classList.remove('hidden');
+      }
+
+      document.getElementById('response').innerText = "";
+      document.getElementById('employeeDetails').classList.add('hidden');
+    }
+
+    // Submit Employee Form
+    document.getElementById("empForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
 
       fetch("https://script.google.com/macros/s/AKfycbzZsZSBtxcyJJIDfX72MOP8UV1QCvb1EABnZOXdP1Jqt8YUOQa-xUIDGkqtNVGcRsn7/exec", {
         method: "POST",
@@ -31,13 +131,35 @@
       .then(res => res.text())
       .then(data => {
         document.getElementById("response").innerText = data;
-        form.reset();
+        e.target.reset();
       })
-      .catch(err => {
+      .catch(() => {
         document.getElementById("response").innerText = "Submission Failed!";
-        console.error(err);
       });
     });
+
+    // Fetch employee details from Google Sheet using Apps Script
+    function searchEmployee() {
+      const id = document.getElementById('searchId').value.trim();
+      if (!id) return;
+
+      fetch(`https://script.google.com/macros/s/AKfycbzZsZSBtxcyJJIDfX72MOP8UV1QCvb1EABnZOXdP1Jqt8YUOQa-xUIDGkqtNVGcRsn7/exec?emp_id=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.name) {
+          const div = document.getElementById("employeeDetails");
+          div.innerHTML = `
+            <p><strong>Employee ID:</strong> ${data.id}</p>
+            <p><strong>Name:</strong> ${data.name}</p>
+            <p><strong>Gender:</strong> ${data.gender}</p>
+            <p><strong>Salary:</strong> ${data.salary}</p>
+          `;
+          div.classList.remove("hidden");
+        } else {
+          alert("Employee not found");
+        }
+      });
+    }
   </script>
 </body>
 </html>
