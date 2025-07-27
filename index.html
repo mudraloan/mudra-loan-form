@@ -149,18 +149,19 @@
       fetch(`https://script.google.com/macros/s/AKfycbzZsZSBtxcyJJIDfX72MOP8UV1QCvb1EABnZOXdP1Jqt8YUOQa-xUIDGkqtNVGcRsn7/exec?emp_id=${id}`)
       .then(res => res.json())
       .then(data => {
-        if (data && data.name) {
-          const div = document.getElementById("employeeDetails");
-          div.innerHTML = `
-            <p><strong>Employee ID:</strong> ${data.id}</p>
-            <p><strong>Name:</strong> ${data.name}</p>
-            <p><strong>Gender:</strong> ${data.gender}</p>
-            <p><strong>Salary:</strong> ${data.salary}</p>
-          `;
-          div.classList.remove("hidden");
-        } else {
-          alert("Employee not found");
-        }
+        if (data && data.emp_name) {
+  const div = document.getElementById("employeeDetails");
+  div.innerHTML = `
+    <p><strong>Employee ID:</strong> ${data.emp_id}</p>
+    <p><strong>Name:</strong> ${data.emp_name}</p>
+    <p><strong>Gender:</strong> ${data.gender}</p>
+    <p><strong>Salary:</strong> ${data.salary}</p>
+  `;
+  div.classList.remove("hidden");
+} else {
+  alert("Employee not found");
+}
+
       });
     }
   </script>
