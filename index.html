@@ -181,6 +181,11 @@
           }
         });
     }
+    // 🔠 Force uppercase in Search ID field
+document.getElementById('searchId').addEventListener('input', function () {
+  this.value = this.value.toUpperCase();
+});
+
   </script>
 </body>
 </html>
