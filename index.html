@@ -33,6 +33,11 @@
       font-size: 16px;
     }
 
+    input[readonly] {
+      background-color: #ddd;
+      color: #333;
+    }
+
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -79,7 +84,7 @@
       <h2>Add Employee</h2>
       <form id="empForm">
         <label>Employee ID:</label><br>
-        <input type="text" name="emp_id" required><br>
+        <input type="text" name="emp_id" id="empIdField" readonly required><br>
         <label>Employee Name:</label><br>
         <input type="text" name="emp_name" required><br>
         <label>Gender:</label><br>
@@ -105,12 +110,15 @@
   </div>
 
   <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbx0X8DSsMO2Pif9mz13jDZW4_WAbqritBtKnhgsS5_MyIwQaDCd1_Ucv3-L4Wpz3boc/exec";
+
     function showForm(type) {
       document.getElementById('addForm').classList.add('hidden');
       document.getElementById('viewForm').classList.add('hidden');
 
       if (type === 'add') {
         document.getElementById('addForm').classList.remove('hidden');
+        fetchNextEmpId(); // Load auto-id
       } else {
         document.getElementById('viewForm').classList.remove('hidden');
       }
@@ -121,21 +129,29 @@
       document.getElementById('employeeDetails').classList.add('hidden');
     }
 
-    // ✅ SUBMIT FORM FIXED USING URLSearchParams
+    // 🔄 Fetch next Employee ID
+    function fetchNextEmpId() {
+      fetch(scriptURL)
+        .then(res => res.text())
+        .then(id => {
+          document.getElementById("empIdField").value = id;
+        });
+    }
+
+    // ✅ SUBMIT FORM
     document.getElementById("empForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = new URLSearchParams(new FormData(e.target));
 
-      fetch("https://script.google.com/macros/s/AKfycbz4HcN2EkhcIKwvap5QFOAZlzmXTQs-Udzw15QLhdA4p74-g9nT-P2gVevaeh34PpHq/exec", {
+      fetch(scriptURL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: form
       })
       .then(res => res.text())
       .then(data => {
         document.getElementById("response").innerText = data;
+        fetchNextEmpId(); // Load next ID after successful submit
         e.target.reset();
       })
       .catch(() => {
@@ -148,7 +164,7 @@
       const id = document.getElementById('searchId').value.trim();
       if (!id) return;
 
-      fetch(`https://script.google.com/macros/s/AKfycbz4HcN2EkhcIKwvap5QFOAZlzmXTQs-Udzw15QLhdA4p74-g9nT-P2gVevaeh34PpHq/exec?emp_id=${id}`)
+      fetch(`${scriptURL}?emp_id=${id}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.emp_name) {
