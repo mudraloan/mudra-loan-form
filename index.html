@@ -114,22 +114,24 @@
       } else {
         document.getElementById('viewForm').classList.remove('hidden');
       }
-// 🔄 Reset both forms when switching
-  document.getElementById('empForm').reset();
-  document.getElementById('searchId').value = "";
-      
+
+      document.getElementById('empForm').reset();
+      document.getElementById('searchId').value = "";
       document.getElementById('response').innerText = "";
       document.getElementById('employeeDetails').classList.add('hidden');
     }
 
-    // Submit Employee Form
+    // ✅ SUBMIT FORM FIXED USING URLSearchParams
     document.getElementById("empForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const formData = new FormData(e.target);
+      const form = new URLSearchParams(new FormData(e.target));
 
       fetch("https://script.google.com/macros/s/AKfycbzZsZSBtxcyJJIDfX72MOP8UV1QCvb1EABnZOXdP1Jqt8YUOQa-xUIDGkqtNVGcRsn7/exec", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: form
       })
       .then(res => res.text())
       .then(data => {
@@ -141,28 +143,27 @@
       });
     });
 
-    // Fetch employee details from Google Sheet using Apps Script
+    // 🔍 SEARCH EMPLOYEE
     function searchEmployee() {
       const id = document.getElementById('searchId').value.trim();
       if (!id) return;
 
       fetch(`https://script.google.com/macros/s/AKfycbzZsZSBtxcyJJIDfX72MOP8UV1QCvb1EABnZOXdP1Jqt8YUOQa-xUIDGkqtNVGcRsn7/exec?emp_id=${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.emp_name) {
-  const div = document.getElementById("employeeDetails");
-  div.innerHTML = `
-    <p><strong>Employee ID:</strong> ${data.emp_id}</p>
-    <p><strong>Name:</strong> ${data.emp_name}</p>
-    <p><strong>Gender:</strong> ${data.gender}</p>
-    <p><strong>Salary:</strong> ${data.salary}</p>
-  `;
-  div.classList.remove("hidden");
-} else {
-  alert("Employee not found");
-}
-
-      });
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.emp_name) {
+            const div = document.getElementById("employeeDetails");
+            div.innerHTML = `
+              <p><strong>Employee ID:</strong> ${data.emp_id}</p>
+              <p><strong>Name:</strong> ${data.emp_name}</p>
+              <p><strong>Gender:</strong> ${data.gender}</p>
+              <p><strong>Salary:</strong> ${data.salary}</p>
+            `;
+            div.classList.remove("hidden");
+          } else {
+            alert("Employee not found");
+          }
+        });
     }
   </script>
 </body>
