@@ -126,7 +126,7 @@
       e.preventDefault();
       const form = new URLSearchParams(new FormData(e.target));
 
-      fetch("https://script.google.com/macros/s/AKfycbwjpPWY6hU7or9BRnodoP6DZFYxhBSI0Ov7MUF--tFU_mrh8KtvMhql4fJ3yIaxpNxk/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbz4HcN2EkhcIKwvap5QFOAZlzmXTQs-Udzw15QLhdA4p74-g9nT-P2gVevaeh34PpHq/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -148,7 +148,7 @@
       const id = document.getElementById('searchId').value.trim();
       if (!id) return;
 
-      fetch(`https://script.google.com/macros/s/AKfycbwjpPWY6hU7or9BRnodoP6DZFYxhBSI0Ov7MUF--tFU_mrh8KtvMhql4fJ3yIaxpNxk/exec?emp_id=${id}`)
+      fetch(`https://script.google.com/macros/s/AKfycbz4HcN2EkhcIKwvap5QFOAZlzmXTQs-Udzw15QLhdA4p74-g9nT-P2gVevaeh34PpHq/exec?emp_id=${id}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.emp_name) {
